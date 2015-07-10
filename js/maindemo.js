@@ -168,51 +168,46 @@ function isover(curTetris,xx,yy){
 	return 0;
 }
 function createTetris(){
-	var newType=Math.ceil(Math.random()*7);
+	var newType=Math.floor(Math.random()*7);
 	return {
 		type	:	newType,
 		x		:	-1,
 		y		:	Math.floor((10-Tetris[newType].width)/2),
 	}
 }
-function jishu(){
+function jishu()
+{
 	var ans=0;
-	for(var k=0;k<20;k++){
-			for(var j=0;j<10;j++){
-				if(grid[k][j].isGrid) ans++;
-			}
+	for(var i=0;i<20;i++){
+		for(var j=0;j<10;j++){
+			if(grid[i][j].isGrid==1)
+				ans++;
+		}
 	}
 	return ans;
 }
 function change(){
 	var flag=isBottom(curTetris.x+1,curTetris.y,curTetris.type);
 	if(flag==1){
-		console.log("qian"+jishu())
 		for(var i=0;i<4;i++){
 			var x=curTetris.x+Tetris[curTetris.type].x[i];
 			var y=curTetris.y+Tetris[curTetris.type].y[i];
-			console.log("zhong1  "+jishu())
-			console.log(x,y)
+			console.log(x,y,jishu());
 			grid[x][y]={
 				isGrid	:	1,
 				type	:	curTetris.type,
 			}
-			
-			console.log("zhong2  "+jishu()+'\n')
-		
+			console.log(jishu());
 		}
-		console.log("hou"+jishu())
 		curTetris=nxtTetris;
 		nxtTetris=createTetris();
 		if(isover(curTetris,0,0)){
 			if(gameover==0){
-				//alert(1)
 				for(var i=0;i<20;i++)
 					for(var j=0;j<10;j++)
 						grid[i][j].isGrid=0;
 				Draw();
 			}
-		//	gameover=1;
 		}
 	}else{
 		curTetris.x++;
