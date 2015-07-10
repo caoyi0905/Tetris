@@ -156,7 +156,6 @@ function donghua(){
 	if(gameover) return ;
 	setTimeout("donghua();",fps);
 }
-var tt=0;
 function isover(curTetris,xx,yy){
 	for(var i=0;i<4;i++){
 		var x=curTetris.x+Tetris[curTetris.type].x[i]-xx;
@@ -186,18 +185,20 @@ function jishu()
 	}
 	return ans;
 }
+var tt=0;
 function change(){
 	var flag=isBottom(curTetris.x+1,curTetris.y,curTetris.type);
 	if(flag==1){
-		for(var i=0;i<4;i++){
-			var x=curTetris.x+Tetris[curTetris.type].x[i];
-			var y=curTetris.y+Tetris[curTetris.type].y[i];
+		for(var p=0;p<4;p++){
+			var x=curTetris.x+Tetris[curTetris.type].x[p];
+			var y=curTetris.y+Tetris[curTetris.type].y[p];
 			console.log(x,y,jishu());
 			grid[x][y]={
 				isGrid	:	1,
 				type	:	curTetris.type,
 			}
 			console.log(jishu());
+			if(tt) alert(1);
 		}
 		curTetris=nxtTetris;
 		nxtTetris=createTetris();
@@ -214,25 +215,25 @@ function change(){
 	}
 }
 function isBottom(x,y,type){
-	var flag=0;
+	var flagb=0;
 	for(var k=0;k<4;k++){
 		var i=x+Tetris[type].x[k],j=y+Tetris[type].y[k];
 		if(i<0||i>=20||j<0||j>=10||grid[i][j].isGrid){
-			flag=1;
+			flagb=1;
 			break;
 		}
 	}
-	return flag;
+	return flagb;
 }
 function judge(){
 	for(var i=0;i<20;i++){
-		var flag=1;
+		var flagj=1;
 		for(var j=0;j<10;j++)
 			if(grid[i][j].isGrid==0){
-				flag=0;
+				flagj=0;
 				break;
 			}
-		if(flag==1){
+		if(flagj==1){
 			for(var k=i;k>0;k--){
 				grid[k]=grid[k-1];
 			}
